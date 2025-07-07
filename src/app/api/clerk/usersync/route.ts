@@ -1,5 +1,4 @@
 import { db } from '@/server/db';
-import { error } from 'console';
 
 export const POST = async (req: Request) => {
     try {
@@ -26,7 +25,7 @@ export const POST = async (req: Request) => {
 
         return new Response('Webhook received', { status: 201 });
     } catch (error) {
-        console.error(`Webhook error ${error}`);
+        console.error(`Webhook error`, error);
         return new Response('Webhook error', { status: 400 });
     }
 };
