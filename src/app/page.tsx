@@ -1,11 +1,9 @@
-import { Button } from "@/components/ui/button";
-
-export default async function Home() {
-  return (
-    <div>
-      <Button>
-        Hello worlds
-      </Button>
-    </div>
-  );
+import LinkAccountButton from '@/components/ui/link-account-button';
+import { Fragment } from 'react';
+export default function Home() {
+    return (
+        <Fragment>
+            <LinkAccountButton></LinkAccountButton>
+        </Fragment>
+    );
 }

@@ -1,4 +1,5 @@
 import { db } from '@/server/db';
+import { NextResponse } from 'next/server';
 
 export const POST = async (req: Request) => {
     try {
@@ -23,9 +24,9 @@ export const POST = async (req: Request) => {
 
         console.log(`User synced to database`);
 
-        return new Response('Webhook received', { status: 201 });
+        return new NextResponse('Webhook received', { status: 201 });
     } catch (error) {
         console.error(`Webhook error`, error);
-        return new Response('Webhook error', { status: 400 });
+        return new NextResponse('Webhook error', { status: 400 });
     }
 };
