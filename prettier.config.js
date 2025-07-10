@@ -4,7 +4,7 @@ export default {
   singleQuote: true,
   trailingComma: "all",
   arrowParens: "always",
-  printWidth: 100,
+  printWidth: 80,
   tabWidth: 4,
   useTabs: false,
   endOfLine: "lf",

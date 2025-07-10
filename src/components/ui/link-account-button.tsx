@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from './button';
-import getAurinkoAuthUrl from '@/lib/aurinko';
+import { getAurinkoAuthUrl } from '@/lib/aurinko';
 const LinkAccountButton = () => {
     return (
         <Button

@@ -20,8 +20,8 @@ export default tseslint.config(
     rules: {
       "semi": ["error", "always"],
       "indent": ["error", 4],
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-assignment": "warn",
+      "@typescript-eslint/no-unsafe-member-access": "warn",
       "@typescript-eslint/array-type": "warn",
       "@typescript-eslint/consistent-type-definitions": "warn",
       "@typescript-eslint/consistent-type-imports": [
