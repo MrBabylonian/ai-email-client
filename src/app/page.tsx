@@ -1,10 +1,24 @@
 import LinkAccountButton from '@/components/ui/link-account-button';
+import { SignIn, SignedIn, SignedOut } from '@clerk/nextjs';
 import { Fragment } from 'react';
-// eslint-disable-next-line @typescript-eslint/require-await
-export default async function Home() {
+
+export default function Home() {
     return (
         <Fragment>
-            <LinkAccountButton></LinkAccountButton>
+            <SignedOut>
+                <div className="flex min-h-screen items-center justify-center">
+                    <SignIn />
+                </div>
+            </SignedOut>
+
+            <SignedIn>
+                <div className="container mx-auto p-8">
+                    <h1 className="mb-8 text-2xl font-bold">
+                        Welcome to AI Email Client
+                    </h1>
+                    <LinkAccountButton />
+                </div>
+            </SignedIn>
         </Fragment>
     );
 }

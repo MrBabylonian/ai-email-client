@@ -2,17 +2,19 @@ import { exchangeCodeForAccessToken, getAccountDetails } from '@/lib/aurinko';
 import { db } from '@/server/db';
 import { auth } from '@clerk/nextjs/server';
 import { NextResponse, type NextRequest } from 'next/server';
+import { waitUntil } from '@vercel/functions';
+import axios from 'axios';
 
 export const GET = async (req: NextRequest) => {
     try {
-        const { userId } = await auth();
+        const { userId } = await auth(); // Try to authorize the user
         if (!userId) {
             return NextResponse.json(
                 { message: 'Unauthorized' },
                 { status: 401 },
             );
         }
-        console.info('Aser authenticated');
+        console.info('User authenticated');
         const params = req.nextUrl.searchParams; // Get the query params
         const status = params.get('status'); // Get the status
         if (status !== 'success') {
@@ -49,6 +51,7 @@ export const GET = async (req: NextRequest) => {
             );
         }
         console.info('Account details received successfully');
+        // Create or Update the Email account in the database
         await db.account.upsert({
             where: {
                 id: token.accountId.toString(),
@@ -67,6 +70,24 @@ export const GET = async (req: NextRequest) => {
         });
 
         console.log('Database updated');
+
+        // Trigger the inital sync endpoint
+        waitUntil(
+            axios
+                .post(`${process.env.NEXT_PUBLIC_URL}/api/initial-sync`, {
+                    accountId: token.accountId.toString(),
+                    userId,
+                })
+                .then((response) => {
+                    console.log(
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+                        `Initial sync triggered ${response.data.toString()}`,
+                    );
+                })
+                .catch((error) => {
+                    console.log(`Failed to trigger initial sync ${error}`);
+                }),
+        );
 
         return NextResponse.redirect(new URL('/mail', req.url));
     } catch (e) {

@@ -12,10 +12,11 @@ export const getAurinkoAuthUrl = async (
         if (!userId) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
+        // Construct the query string
         const params = new URLSearchParams({
             clientId: process.env.AURINKO_CLIENT_ID!,
             serviceType,
-            scope: 'Mail.Read Mail.ReadWrite Mail.Send Mail.Drafts Mail.All',
+            scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.modify',
             responseType: 'code',
             returnUrl: `${process.env.NEXT_PUBLIC_URL}/api/aurinko/callback`,
         });
@@ -23,7 +24,6 @@ export const getAurinkoAuthUrl = async (
         return `https://api.aurinko.io/v1/auth/authorize?${params.toString()}`;
     } catch (e) {
         console.error('Failed to generate Aurionko Auth URL', e);
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         return new NextResponse(`Failed to generate Aurionko Auth URL ${e}`, {
             status: 401,
         });
