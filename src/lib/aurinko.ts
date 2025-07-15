@@ -16,7 +16,7 @@ export const getAurinkoAuthUrl = async (
         const params = new URLSearchParams({
             clientId: process.env.AURINKO_CLIENT_ID!,
             serviceType,
-            scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.modify',
+            scope: 'Mail.Read Mail.ReadWrite Mail.Send Mail.Drafts Mail.All',
             responseType: 'code',
             returnUrl: `${process.env.NEXT_PUBLIC_URL}/api/aurinko/callback`,
         });

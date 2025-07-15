@@ -92,5 +92,9 @@ export const GET = async (req: NextRequest) => {
         return NextResponse.redirect(new URL('/mail', req.url));
     } catch (e) {
         console.error(e);
+        return NextResponse.json(
+            { message: 'Internal server error' },
+            { status: 500 },
+        );
     }
 };
